@@ -33,11 +33,14 @@ class Setting(object):
         else if the setting file path is same as current instance we do nothing, else we raise error.
 
         Args:
-            setting_file:
+            setting_file: The path of the setting file.
         """
         if not Setting.instance:
             Setting.__setting_file_path = os.path.abspath(setting_file)
             Setting.instance = Setting.__Setting()
+            with open(setting_file) as fp:
+                setting_dict = json.load(fp)
+                Setting.instance.__dict__ = setting_dict
         else:
             if os.path.abspath(setting_file) != Setting.__setting_file_path:
                 raise Exception("Setting file name error")
@@ -47,6 +50,14 @@ class Setting(object):
 
     def __setattr__(self, name, value):
         return setattr(self.instance, name, value)
+
+    def save_setting(self, setting_file):
+        if not Setting.instance:
+            raise Exception("No setting to save")
+        else:
+            with open(setting_file,'w') as fp:
+                json.dump(Setting.instance.__dict__, fp)
+
 
 if __name__ == "__main__":
     import doctest
