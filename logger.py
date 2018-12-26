@@ -49,24 +49,24 @@ class Logger(object):
             message (String): message
         """
         try:
-            function_name = inspect.stack()[1][3]
+            function_name = inspect.stack(1)[1][3]
         except IndexError:
             function_name = "None"
         Logger.logger_instance.log(level,"{} | {}".format(function_name,message))
 
-    def debug(message):
+    def debug(self,message):
         self.log(Logger.DEBUG,message)
 
-    def info(message):
+    def info(self,message):
         self.log(Logger.INFO,message)
 
-    def warning(message):
+    def warning(self,message):
         self.log(Logger.WARNING,message)
 
-    def error(message):
+    def error(self,message):
         self.log(Logger.ERROR,message)
 
-    def critical(message):
+    def critical(self,message):
         self.log(Logger.CRITICAL,message)
 
 
