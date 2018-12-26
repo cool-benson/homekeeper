@@ -52,6 +52,15 @@ class Setting(object):
         return setattr(self.instance, name, value)
 
     def save_setting(self, setting_file):
+        """
+        This function saves current setting to the file path given.
+        
+        Args:
+            setting_file (String): The path to save file.
+        
+        Raises:
+            Exception: If there is no setting to save exception will be raised.
+        """
         if not Setting.instance:
             raise Exception("No setting to save")
         else:
