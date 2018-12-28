@@ -40,7 +40,7 @@ class Logger(object):
             logger.setLevel(logging.DEBUG)
             Logger.logger_instance = logger
 
-    def log(self,level, message):
+    def _log(self,level, message):
         """
         The function that logs massage
         
@@ -49,24 +49,27 @@ class Logger(object):
             message (String): message
         """
         try:
-            function_name = inspect.stack(1)[1][3]
+            function_name = inspect.stack(2)[2][3]
         except IndexError:
             function_name = "None"
         Logger.logger_instance.log(level,"{} | {}".format(function_name,message))
 
+    def log(self,level, message):
+        self._log(level,message)
+
     def debug(self,message):
-        self.log(Logger.DEBUG,message)
+        self._log(Logger.DEBUG,message)
 
     def info(self,message):
-        self.log(Logger.INFO,message)
+        self._log(Logger.INFO,message)
 
     def warning(self,message):
-        self.log(Logger.WARNING,message)
+        self._log(Logger.WARNING,message)
 
     def error(self,message):
-        self.log(Logger.ERROR,message)
+        self._log(Logger.ERROR,message)
 
     def critical(self,message):
-        self.log(Logger.CRITICAL,message)
+        self._log(Logger.CRITICAL,message)
 
 
